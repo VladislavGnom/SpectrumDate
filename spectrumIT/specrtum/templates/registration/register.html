@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'core/css/register.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Абстрактные фигуры на фоне -->
+<div class="abstract-shape shape1"></div>
+<div class="abstract-shape shape2"></div>
+<div class="abstract-shape shape3"></div>
+
+<!-- Основной контейнер формы -->
+<div class="registration-container">
+    <div class="registration-header">
+        <h1>Присоединяйтесь к нам</h1>
+        <p>Начните свой путь к новым знакомствам</p>
+    </div>
+    
+    <div class="registration-body">
+        <form id="registrationForm" method="post">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="name" class="form-label">Ваш логин</label>
+                <input type="text" id="name" name="username" class="form-input" required placeholder="Придумайте логин">
+            </div>
+
+            <div class="form-group">
+                <label for="first_name" class="form-label">Ваше имя</label>
+                <input type="text" id="first_name" name="first_name" class="form-input" required placeholder="Введите ваше имя">
+            </div>
+
+            <div class="form-group">
+                <label for="last_name" class="form-label">Ваша фамилия</label>
+                <input type="text" id="last_name" name="last_name" class="form-input" required placeholder="Введите свою фамилию">
+            </div>
+
+            <div class="form-group">
+                <label for="age" class="form-label">Возраст</label>
+                <input type="number" id="age" name="age" class="form-input" required placeholder="Какой ваш возраст?">
+            </div>
+
+            <!-- <div class="form-group">
+                <label for="age" class="form-label">Возраст</label>
+                <input type="number" id="age" name="age" class="form-input" required placeholder="Какой ваш возраст?">
+            </div> -->
+            
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" name="email" class="form-input" required placeholder="example@mail.com">
+            </div>
+            
+            <div class="form-group">
+                <label for="password" class="form-label">Пароль</label>
+                <input type="password" id="password" name="password" class="form-input" required minlength="6" placeholder="Не менее 6 символов">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Ваш пол</label>
+                <div class="gender-options">
+                    <label class="gender-option">
+                        <input type="radio" name="gender" value="male" required> Мужской
+                    </label>
+                    <label class="gender-option">
+                        <input type="radio" name="gender" value="female"> Женский
+                    </label>
+                    <label class="gender-option">
+                        <input type="radio" name="gender" value="other"> Другой
+                    </label>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="birthdate" class="form-label">Дата рождения</label>
+                <input type="date" id="birthdate" name="birthdate" class="form-input" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="location" class="form-label">Место проживания</label>
+                <input type="text" id="location" name="location" class="form-input" placeholder="Город или страна" required>
+            </div>
+            
+            <div class="terms-checkbox">
+                <input type="checkbox" id="terms" required>
+                <label for="terms" class="terms-text">
+                    Я согласен с <a href="#">условиями использования</a> и подтверждаю, что мне исполнилось 18 лет
+                </label>
+            </div>
+            
+            <button type="submit" class="submit-btn">Зарегистрироваться</button>
+            
+            <div class="login-link">
+                Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

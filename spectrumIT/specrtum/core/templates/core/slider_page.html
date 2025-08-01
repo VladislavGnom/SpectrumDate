@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'core/css/slider_page.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <div id="targetUserId" style="display: none;"></div>
+    <div id="nextPage" style="display: none;"></div>
+    
+    <div id="data-container">
+        <div id="action-buttons" class="action-buttons" style="display: none;">
+            <button id="like-btn" class="action-btn like-btn">❤️ Нравится</button>
+            <button id="dislike-btn" class="action-btn message-btn">👎 Не нравится</button>
+        </div>
+    </div>
+    
+</div>
+    <script src="{% static 'core/js/slider/slider_main.js' %}"></script>
+{% endblock %}

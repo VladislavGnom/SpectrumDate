@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'core/css/chat_user.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="chat-container">
+        <div class="sidebar">
+            <div class="chat-header"></div>
+            <div class="search">
+                <input type="text" placeholder="Поиск">
+            </div>
+            <div class="chats">
+                {% for chat in chats %}
+                <div class="chat-item" data-chat-id="{{ chat.pk }}">
+                    <div class="chat-avatar"></div>
+                    <div class="chat-info">
+                        <div class="chat-name">
+                            <div id="{{ chat.name }}_id" style="display: none;">{{ chat.name }}</div>
+                            {% for participant in chat.participants.all %}
+                                {% if participant != request.user %}
+                                    <span>{{ participant }}</span>
+                                {% endif %}
+                            {% endfor %}
+                            <!-- <span class="chat-time">12:30</span> -->
+                        </div>
+                        <div class="chat-preview">{{ chat.messages.0 }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="main">
+            <div id="chat-log">
+
+            </div>
+            <input type="text" name="" id="chat-message-input">
+            <button id="chat-message-btn">Send</button>
+            <!-- <div class="conversation-header">
+                <div class="chat-title">Алексей Петров</div>
+            </div>
+            <div class="messages">
+                <div class="message incoming">
+                    Привет! Как твои дела?
+                    <span class="message-time">12:30</span>
+                </div>
+                <div class="message outgoing">
+                    Привет! Всё отлично, работаю над новым проектом.
+                    <span class="message-time">12:32</span>
+                </div>
+                <div class="message incoming">
+                    Здорово! Когда сможешь показать?
+                    <span class="message-time">12:33</span>
+                </div>
+                <div class="message outgoing">
+                    Могу завтра. В 15:00 тебе подойдёт?
+                    <span class="message-time">12:35</span>
+                </div>
+            </div>
+            <div class="input-area">
+                <input type="text" placeholder="Написать сообщение...">
+                <button class="send-button">Отправить</button>
+            </div> -->
+        </div>
+    </div>
+<script src="{% static 'core/js/chat_exec.js' %}"></script>
+{% endblock %}

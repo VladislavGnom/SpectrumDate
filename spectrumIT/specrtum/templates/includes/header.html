@@ -1,0 +1,19 @@
+<div class="main-header">
+    <div class="logo-container">
+        <div class="logo">S</div>
+        <a href="{% url 'main' %}" style="color: #FFFFFF; text-decoration: none;"><div class="logo-text">Spectrum_Date</div></a>
+    </div>
+    <div class="nav-buttons">
+        <a href="{% url 'slider' %}"><button class="nav-btn">Лента</button></a>
+        <a href="{% url 'chats' %}"><button class="nav-btn active">Чаты</button></a>
+        <a href="{% url 'notifications' %}"><button class="nav-btn active">Сообщения</button></a>
+        {% if not user.is_authenticated %}
+            <a href="{% url 'login' %}"><button class="login-btn">Войти</button></a>
+        {% else %}
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button class="nav-btn logout-btn">Выйти</button>
+            </form>
+        {% endif %}
+    </div>
+</div>

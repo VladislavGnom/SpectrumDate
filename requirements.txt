@@ -1,0 +1,9 @@
+django
+django-channels
+channels-redis
+daphne
+redis
+asgiref
+celery
+pillow
+django-widget-tweaks

@@ -1,0 +1,48 @@
+amqp==5.3.1
+asgiref==3.9.1
+attrs==25.3.0
+autobahn==24.4.2
+Automat==25.4.16
+billiard==4.2.1
+celery==5.5.3
+cffi==1.17.1
+channels==4.3.0
+channels_redis==4.3.0
+click==8.2.1
+click-didyoumean==0.3.1
+click-plugins==1.1.1.2
+click-repl==0.3.0
+constantly==23.10.4
+cryptography==45.0.5
+daphne==4.2.1
+Django==5.2.4
+django-channels @ file:///run/user/1000/gvfs/mtp%3Ahost%3DTECNO_TECNO_POVA_Neo_3_100672539R006359/%D0%92%D0%BD%D1%83%D1%82%D1%80%D0%B5%D0%BD%D0%BD%D1%8F%D1%8F%20%D0%BE%D0%B1%D1%89%D0%B0%D1%8F%20%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D1%8C/Documents/libs/packages/django_channels-0.7.0-py3-none-any.whl#sha256=ceb5675ed0133bd54cc0529eb76157cc3b9ab67aceba7293ee5ac2fe4126987b
+django-widget-tweaks==1.5.0
+hyperlink==21.0.0
+idna==3.10
+incremental==24.7.2
+kombu==5.5.4
+msgpack==1.1.1
+oauthlib @ file:///run/user/1000/gvfs/mtp%3Ahost%3DTECNO_TECNO_POVA_Neo_3_100672539R006359/%D0%92%D0%BD%D1%83%D1%82%D1%80%D0%B5%D0%BD%D0%BD%D1%8F%D1%8F%20%D0%BE%D0%B1%D1%89%D0%B0%D1%8F%20%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D1%8C/Documents/libs/packages/oauthlib-2.0.7-py2.py3-none-any.whl#sha256=09d438bcac8f004ae348e721e9d8a7792a9e23cd574634e973173344046287f5
+packaging==25.0
+pillow==11.3.0
+prompt_toolkit==3.0.51
+pyasn1==0.6.1
+pyasn1_modules==0.4.2
+pycparser==2.22
+pyOpenSSL==25.1.0
+python-dateutil==2.9.0.post0
+redis==6.2.0
+requests @ file:///run/user/1000/gvfs/mtp%3Ahost%3DTECNO_TECNO_POVA_Neo_3_100672539R006359/%D0%92%D0%BD%D1%83%D1%82%D1%80%D0%B5%D0%BD%D0%BD%D1%8F%D1%8F%20%D0%BE%D0%B1%D1%89%D0%B0%D1%8F%20%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D1%8C/Documents/libs/packages/requests-2.7.0-py2.py3-none-any.whl#sha256=20f976cdce02a42b69ce80e9e03897a51814b36d448b37288546086ebc473146
+requests-oauthlib @ file:///run/user/1000/gvfs/mtp%3Ahost%3DTECNO_TECNO_POVA_Neo_3_100672539R006359/%D0%92%D0%BD%D1%83%D1%82%D1%80%D0%B5%D0%BD%D0%BD%D1%8F%D1%8F%20%D0%BE%D0%B1%D1%89%D0%B0%D1%8F%20%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D1%8C/Documents/libs/packages/requests_oauthlib-0.5.0-py2.py3-none-any.whl#sha256=c7d2ee6c2e8c58a0fd60c2d7d21ce93c8d2b22e7a9f232d4bf915326afb479af
+service-identity==24.2.0
+setuptools==80.9.0
+six @ file:///run/user/1000/gvfs/mtp%3Ahost%3DTECNO_TECNO_POVA_Neo_3_100672539R006359/%D0%92%D0%BD%D1%83%D1%82%D1%80%D0%B5%D0%BD%D0%BD%D1%8F%D1%8F%20%D0%BE%D0%B1%D1%89%D0%B0%D1%8F%20%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D1%8C/Documents/libs/packages/six-1.9.0-py2.py3-none-any.whl#sha256=418a93c397a7edab23e5588dbc067ac74a723edb3d541bd4936f79476e7645da
+sqlparse==0.5.3
+Twisted==25.5.0
+txaio==25.6.1
+typing_extensions==4.14.1
+tzdata==2025.2
+vine==5.1.0
+wcwidth==0.2.13
+zope.interface==7.2

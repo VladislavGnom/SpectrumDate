@@ -1,0 +1,92 @@
+:root {
+    --primary-color: #8a6bc9;
+    --secondary-color: #ff9bb3;
+    --accent-color: #6a5acd;
+    --bg-color: #f8f9fa;
+    --sidebar-color: #ffffff;
+    --border-color: #e6e6e6;
+    --text-color: #000000;
+    --secondary-text: #707579;
+    --outgoing-bg: #e3f6cb;
+    --incoming-bg: #ffffff;
+    --active-chat: #ebebeb;
+    --hover-chat: #f5f5f5;
+    --input-bg: #f0f2f5;
+    --logout-color: #f44336;
+}
+
+/* Header from лента.html */
+.main-header {
+    width: 100%;
+    height: 56px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.logo-text {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-btn {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: none;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.nav-btn.active {
+    background-color: rgba(138, 107, 201, 0.1);
+}
+
+.nav-btn:hover {
+    background-color: rgba(138, 107, 201, 0.1);
+}
+
+.logout-btn {
+    background-color: var(--logout-color);
+    color: white;
+}
+
+.logout-btn:hover {
+    background-color: #d32f2f;
+}

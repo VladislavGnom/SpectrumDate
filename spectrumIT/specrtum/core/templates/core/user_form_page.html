@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'core/css/slider_page.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container" style="margin-top: 100px;">
+    <div id="data-container">
+        <div class="user-card">
+            <div class="card-header">
+                <img src="{% static 'core/images/default.jpg' %}" alt="Фото профиля" class="card-avatar">
+                <div class="card-verified">✓</div>
+            </div>
+            
+            <div class="card-body">
+                <h1 class="user-name">{{ slider_of_user.first_name }}<span class="user-age">{{ slider_of_user.age }}</span></h1>
+                <p class="user-status">В сети 1 минуту назад</p>
+                
+                <div class="user-info">
+                    <div class="info-item">
+                        <div class="info-icon">📍</div>
+                        <div class="info-text">{{ slider_of_user.location }}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">💼</div>
+                        <div class="info-text">{{ slider_of_user.gender }}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">🎓</div>
+                        <div class="info-text">{{ slider_of_user.birthdate }}</div>
+                    </div>
+                </div>
+                
+                <div class="user-bio">
+                    {{ slider_of_user.bio }}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if user == slider_of_user %}
+        <div id="action-buttons" class="action-buttons" style="width: 291.11px;">
+            
+        </div>
+    {% else %}
+        <div id="action-buttons" class="action-buttons">
+            <button id="like-btn" class="action-btn like-btn">❤️ Нравится</button>
+            <button id="dislike-btn" class="action-btn message-btn">👎 Не нравится</button>
+        </div>
+    {% endif %}
+
+    <script>
+        let currentPage = 1;
+        const dataContainer = document.getElementById('data-container');
+        const actionBlock = document.getElementById('action-buttons');
+        const likeButton = document.getElementById('like-btn');                    
+        const dislikeButton = document.getElementById('dislike-btn');            
+        
+        function sendNotificationToNewLikedUser(targetUserId, curUserId) {
+            const formLink = `${location.origin}/slider/${curUserId}`;
+            const message = `Вы понравились одному из пользоватлей нашего веб-приложения SpectrumDate. <a href="${formLink}">Анкета</a>`;
+            sendNotification(targetUserId, message);
+        }
+
+        function sendNotificationToUserThatHaveAlreadyLikedYou(targetUserId) {
+            const formLink = `${location.origin}/slider/${curUserId}`;
+            const message = `Вы понравились в ответ одному из пользоватлей нашего веб-приложения SpectrumDate. <a href="${formLink}">Анкета</a>`;
+            sendNotification(targetUserId, message);
+        }
+
+        function sendNotification(targetUserId, message) {            
+            fetch(`${location.origin}/send-message/${targetUserId}?message=${message}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status == 200) {
+                        // some code
+                    }
+                })
+        }
+
+        function createChatBetweenTwoUsersIfPossible(curUserId, targetUserId) {
+            fetch(`${location.origin}/create-chat-if-possible?cur_user=${curUserId}&target_user=${targetUserId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status == 200) {
+                        // some code
+                    }
+                })
+        }
+
+        function processEvent(buttonType) {
+            const curUserId = "{{ user.pk }}";
+            const targetUserId = "{{ slider_of_user.pk }}";
+
+            if (buttonType == 'like') {
+                sendNotificationToNewLikedUser(targetUserId, curUserId);
+                createChatBetweenTwoUsersIfPossible(curUserId, targetUserId);
+            }
+        }
+
+        likeButton.addEventListener('click', (event) => {
+            const buttonType = 'like';
+            processEvent(buttonType);
+        });
+        // dislikeButton.addEventListener('click', loadData);
+
+        // document.addEventListener('DOMContentLoaded', loadData);
+    </script>
+</div>
+{% endblock %}
