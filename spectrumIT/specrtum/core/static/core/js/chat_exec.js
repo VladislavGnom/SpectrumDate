@@ -29,6 +29,7 @@ function connectToChatByChatId(chatId) {
 document.querySelectorAll('.chat-item').forEach(item => {
     item.addEventListener('click', function() {
         const chatId = this.dataset.chatId;
+        prepareChatEnvironment();
         connectToChatByChatId(chatId);
     })
 })
@@ -42,6 +43,16 @@ document.querySelector('#chat-message-input').onkeyup = function(e) {
 document.querySelector('#chat-message-btn').onclick = function(e) {
     processSendingMessage();
 };
+
+function prepareChatEnvironment() {
+    showChatWindow();
+}
+
+function showChatWindow() {
+    const mainChatWindow = document.getElementById('main-chat-window');
+
+    mainChatWindow.style.display = 'block';
+}
 
 function processSendingMessage() {
     const messageInput = document.querySelector('#chat-message-input');
