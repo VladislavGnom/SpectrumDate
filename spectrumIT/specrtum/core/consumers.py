@@ -7,8 +7,8 @@ from core.models.chat_models import ChatRoom, Message
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-        self.room_name = self.scope['url_route']['kwargs']['room_name']
-        self.room_group_name = f'chat_{self.room_name}'
+        self.chat_id = self.scope['url_route']['kwargs']['chat_id']
+        self.room_group_name = f'chat_{self.chat_id}'
         self.user = self.scope['user']
 
         # Проверяем авторизацию
@@ -65,13 +65,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
     def check_room_access(self):
         return ChatRoom.objects.filter(
-            pk=self.room_name,
+            id=self.chat_id,
             participants__in=[self.user]
         ).exists()
 
     @database_sync_to_async
     def save_message(self, content):
-        room = ChatRoom.objects.get(pk=self.room_name)
+        room = ChatRoom.objects.get(id=self.chat_id)
         Message.objects.create(
             room=room,
             sender=self.user,
