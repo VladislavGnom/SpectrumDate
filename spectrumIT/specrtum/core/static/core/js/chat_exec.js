@@ -33,13 +33,21 @@ document.querySelectorAll('.chat-item').forEach(item => {
     })
 })
 
-document.querySelector('#chat-message-btn').onkeyup = function(e) {
+document.querySelector('#chat-message-input').onkeyup = function(e) {
     if (e.key === 'Enter') {
-        const messageInput = document.querySelector('#chat-message-input');
-        const message = messageInput.value;
-        chatSocket.send(JSON.stringify({
-            'message': message
-        }));
-        messageInput.value = '';
+        processSendingMessage();
     }
 };
+
+document.querySelector('#chat-message-btn').onclick = function(e) {
+    processSendingMessage();
+};
+
+function processSendingMessage() {
+    const messageInput = document.querySelector('#chat-message-input');
+    const message = messageInput.value;
+    chatSocket.send(JSON.stringify({
+        'message': message
+    }));
+    messageInput.value = '';
+}
