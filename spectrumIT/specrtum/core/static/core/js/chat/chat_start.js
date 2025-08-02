@@ -1,11 +1,12 @@
 import { startChatByChatId, processSendingMessage } from './chat_exec.js';
 
 let chatSocket = null;
+const currentUsername = document.getElementById('chat-container').dataset.username;
 
 export const getChatSocket = () => chatSocket;
 export const setChatSocket = newChatSocket => { chatSocket = newChatSocket };
 
-export const currentUsername = document.getElementById('chat-container').dataset.username;
+export const getCurrentUsername = () => currentUsername;
 
 document.querySelectorAll('.chat-item').forEach(item => {
     item.addEventListener('click', function() {

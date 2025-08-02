@@ -1,4 +1,4 @@
-import { getChatSocket, setChatSocket, currentUsername } from './chat_start.js';
+import { getChatSocket, setChatSocket, getCurrentUsername } from './chat_start.js';
 
 export function startChatByChatId(chatId) {
     prepareChatEnvironment();
@@ -77,24 +77,16 @@ function addMessageToChat(metaData) {
     } else {
         addNewMessage(metaData, isCurrentUser);
     }
-
-    // isMessageHistory
-    // const messageElement = document.createElement('div');
-    // messageElement.textContent = message;
-    
-    // document.querySelector('#chat-log').appendChild(messageElement);
 }
 
 function checkIsCurrentUser(metaData) {
+    const currentUsername = getCurrentUsername();
+
     return metaData.sender === currentUsername;
 }
 
 function isMessageHistory(data) {
     return data.is_history;
-}
-
-function isMessageIncoming(data) {
-    return data.is_incoming;
 }
 
 function addMessageToHistory(data, isCurrentUser) {
@@ -110,27 +102,7 @@ function addMessageToHistory(data, isCurrentUser) {
     )
 }
 
-function addIncomingMessage(data) {
-    const messagesContainer = document.getElementById('chat-log');
-    messagesContainer.insertAdjacentHTML('afterbegin',
-        `<div class="message incoming">
-            ${data.message}
-            <span class="message-time timestamp">${new Date(data.timestamp).toLocaleString()}</span>
-        </div>`
-    )
-}
-
-function addOutgoingMessage(data) {
-    const messagesContainer = document.getElementById('chat-log');
-    messagesContainer.insertAdjacentHTML('afterbegin',
-        `<div class="message outgoing">
-            ${data.message}
-            <span class="message-time timestamp">${new Date(data.timestamp).toLocaleString()}</span>
-        </div>`
-    )
-}
-
-function addNewMessage(data) {
+function addNewMessage(data, isCurrentUser) {
     const messagesContainer = document.getElementById('chat-log');
     const messageClass = isCurrentUser ? 'message new outgoing' : 'message new incoming';
 
@@ -141,11 +113,12 @@ function addNewMessage(data) {
             <span class="timestamp">${new Date(data.timestamp).toLocaleString()}</span>
         </div>`
     )
+
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
 
 function showDebugInformation(metaData) {
     console.log('Message received: ', metaData.message)
-    console.log('DATA: ', metaData);
 }
 
 export function processSendingMessage(chatSocket) {

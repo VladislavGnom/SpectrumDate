@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="chat-container" data-username="{{ request.user }}">
+    <div id="chat-container" class="chat-container" data-username="{{ request.user.username }}">
         <div class="sidebar">
             <div class="chat-header"></div>
             <div class="search">
