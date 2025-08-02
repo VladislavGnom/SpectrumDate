@@ -29,6 +29,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         await self.accept()
 
+        await self.send_initial_messages()
+
     async def disconnect(self, close_code):
         # Покидаем группу комнаты
         await self.channel_layer.group_discard(
@@ -50,7 +52,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 'type': 'chat_message',
                 'message': message,
                 'sender': self.user.username,
-                'timestamp': str(self.get_current_timestamp())
+                'timestamp': str(self.get_current_timestamp()),
+                'is_history': False
             }
         )
 
@@ -61,6 +64,33 @@ class ChatConsumer(AsyncWebsocketConsumer):
             'sender': event['sender'],
             'timestamp': event['timestamp']
         }))
+
+    async def send_initial_messages(self):
+        """Sending N last messages after connection"""
+
+        messages = await self.get_recent_messages()
+
+        for message in messages:
+            await self.send(text_data=json.dumps({
+                'type': 'chat_message',
+                'message': message['message'],
+                'sender': message['sender'],
+                'timestamp': message['timestamp'],
+                'is_history': True
+            }))
+
+    @database_sync_to_async
+    def get_recent_messages(self, limit=50):
+        """Getting last messages from DB"""
+
+        room = ChatRoom.objects.get(id=self.chat_id)
+        messages = Message.objects.filter(room=room).select_related('sender').order_by('-timestamp')[:limit]
+
+        return [{
+            'message': msg.content,
+            'sender': msg.sender.username,
+            'timestamp': msg.timestamp.isoformat()
+        } for msg in messages]
 
     @database_sync_to_async
     def check_room_access(self):

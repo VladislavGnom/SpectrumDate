@@ -55,9 +55,9 @@ function runWebSocketOnCloseBehaviour() {
 
 function runWebSocketOnMessageBehaviour(event) {
     const data = getParsedDataFromEvent(event);
-    const message = getCreatedMessage(data);
+    // const message = getCreatedMessage(data);
     
-    addMessageAsDOMElement(message);
+    addMessageToChat(data);
     showDebugInformation(data);
 }
 
@@ -69,11 +69,41 @@ function getCreatedMessage(metaData) {
     return `${metaData.sender}: ${metaData.message}`;
 }
 
-function addMessageAsDOMElement(message) {
-    const messageElement = document.createElement('div');
-    messageElement.textContent = message;
+function addMessageToChat(metaData) {
+    if (isMessageHistory(metaData)) {
+        addMessageToHistory(metaData);
+    } else {
+        addNewMessage(metaData);
+    }
+    // isMessageHistory
+    // const messageElement = document.createElement('div');
+    // messageElement.textContent = message;
     
-    document.querySelector('#chat-log').appendChild(messageElement);
+    // document.querySelector('#chat-log').appendChild(messageElement);
+}
+
+function isMessageHistory(data) {
+    return data.is_history;
+}
+
+function addMessageToHistory(data) {
+    const messagesContainer = document.getElementById('chat-log');
+    messagesContainer.insertAdjacentHTML('afterbegin',
+        `<div class="message history">
+            <strong>${data.sender}</strong>: ${data.message}
+            <span class="timestamp">${new Date(data.timestamp).toLocaleString()}</span>
+        </div>`
+    )
+}
+
+function addNewMessage(data) {
+    const messagesContainer = document.getElementById('chat-log');
+    messagesContainer.insertAdjacentHTML('beforeend',
+        `<div class="message new">
+            <strong>${data.sender}</strong>: ${data.message}
+            <span class="timestamp">${new Date(data.timestamp).toLocaleString()}</span>
+        </div>`
+    )
 }
 
 function showDebugInformation(metaData) {
