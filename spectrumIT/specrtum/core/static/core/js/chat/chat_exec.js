@@ -95,9 +95,12 @@ function addMessageToHistory(data, isCurrentUser) {
 
     messagesContainer.insertAdjacentHTML('afterbegin',
         `<div class="${messageClass}">
-            ${!isCurrentUser ? `<strong>${data.sender}</strong><br>` : ''}
-            ${data.message}
-            <span class="timestamp">${new Date(data.timestamp).toLocaleString()}</span>
+            ${!isCurrentUser ? `<img src="${data.avatar_url}" class="user-avatar"></img>` : ''}
+            <div class="message-content">
+                ${!isCurrentUser ? `<strong>${data.sender}</strong><br>` : ''}
+                ${data.message}
+                <span class="timestamp">${new Date(data.timestamp).toLocaleString()}</span>
+            </div>
         </div>`
     )
 }
@@ -108,9 +111,12 @@ function addNewMessage(data, isCurrentUser) {
 
     messagesContainer.insertAdjacentHTML('beforeend',
         `<div class="${messageClass}">
-            ${!isCurrentUser ? `<strong>${data.sender}</strong><br>` : ''}
-            ${data.message}
-            <span class="timestamp">${new Date(data.timestamp).toLocaleString()}</span>
+            ${!isCurrentUser ? `<img src="${data.avatar_url}" class="user-avatar"></img>` : ''}
+            <div class="message-content">
+                ${!isCurrentUser ? `<strong>${data.sender}</strong><br>` : ''}
+                ${data.message}
+                <span class="timestamp">${new Date(data.timestamp).toLocaleString()}</span>
+            </div>
         </div>`
     )
 

@@ -20,7 +20,13 @@
             <div class="chats">
                 {% for chat in chats %}
                 <div class="chat-item" data-chat-id="{{ chat.pk }}">
-                    <div class="chat-avatar"></div>
+                    <div class="chat-avatar">
+                        {% for participant in chat.participants.all %}
+                            {% if participant != request.user %}
+                                <img src="{{ participant.avatar.url }}" alt="user-avatar-{{ participant.pk }}" class="user-avatar" style="height: 48px; width: 48px;">
+                            {% endif %}
+                        {% endfor %}
+                    </div>
                     <div class="chat-info">
                         <div class="chat-name">
                             <div id="{{ chat.name }}_id" style="display: none;">{{ chat.name }}</div>

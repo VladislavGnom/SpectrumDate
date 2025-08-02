@@ -52,6 +52,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 'type': 'chat_message',
                 'message': message,
                 'sender': self.user.username,
+                'avatar_url': self.user.avatar.url if hasattr(self.user, 'avatar') else '',
                 'timestamp': str(self.get_current_timestamp()),
                 'is_history': False,
             }
@@ -62,6 +63,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.send(text_data=json.dumps({
             'message': event['message'],
             'sender': event['sender'],
+            'avatar_url': event['avatar_url'],
             'timestamp': event['timestamp'],
             'is_history': event['is_history'],
         }))
@@ -76,12 +78,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 'type': 'chat_message',
                 'message': message['message'],
                 'sender': message['sender'],
+                'avatar_url': message['avatar_url'],
                 'timestamp': message['timestamp'],
                 'is_history': True,
             }))
 
     @database_sync_to_async
-    def get_recent_messages(self, limit=50):
+    def get_recent_messages(self, limit=20):
         """Getting last messages from DB"""
 
         room = ChatRoom.objects.get(id=self.chat_id)
@@ -90,6 +93,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         return [{
             'message': msg.content,
             'sender': msg.sender.username,
+            'avatar_url': msg.sender.avatar.url if hasattr(msg.sender, 'avatar') else '',
             'timestamp': msg.timestamp.isoformat(),
         } for msg in messages]
 

@@ -8,7 +8,7 @@ class User(AbstractUser):
         FEMALE = 'female', 'Женский'
         ANOTHER = 'another', 'Другой'
 
-    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
+    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True, default='avatars/default.jpg')
     bio = models.TextField(max_length=500, blank=True)
     age = models.PositiveIntegerField()
     phone = models.CharField(max_length=20, blank=True)
