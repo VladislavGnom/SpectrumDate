@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="chat-container">
+    <div class="chat-container" data-username="{{ request.user }}">
         <div class="sidebar">
             <div class="chat-header"></div>
             <div class="search">
@@ -38,11 +38,16 @@
             </div>
         </div>
         <div id="main-chat-window" class="main" style="display: none;">
-            <div id="chat-log">
-
+            <div class="conversation-header">
+                <div class="chat-title"></div>
             </div>
-            <input type="text" name="" placeholder="Введите сообщение" id="chat-message-input">
-            <button id="chat-message-btn">Send</button>
+            <div id="chat-log" class="messages">
+            </div>
+
+            <div class="input-area">
+                <input id="chat-message-input" name="" type="text" placeholder="Написать сообщение...">
+                <button id="chat-message-btn" class="send-button">Отправить</button>
+            </div>
             <!-- <div class="conversation-header">
                 <div class="chat-title">Алексей Петров</div>
             </div>

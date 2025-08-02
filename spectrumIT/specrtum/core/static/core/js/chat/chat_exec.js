@@ -1,4 +1,4 @@
-import { getChatSocket, setChatSocket } from './chat_start.js';
+import { getChatSocket, setChatSocket, currentUsername } from './chat_start.js';
 
 export function startChatByChatId(chatId) {
     prepareChatEnvironment();
@@ -70,11 +70,14 @@ function getCreatedMessage(metaData) {
 }
 
 function addMessageToChat(metaData) {
+    const isCurrentUser = checkIsCurrentUser(metaData);
+
     if (isMessageHistory(metaData)) {
-        addMessageToHistory(metaData);
+        addMessageToHistory(metaData, isCurrentUser);
     } else {
-        addNewMessage(metaData);
+        addNewMessage(metaData, isCurrentUser);
     }
+
     // isMessageHistory
     // const messageElement = document.createElement('div');
     // messageElement.textContent = message;
@@ -82,25 +85,59 @@ function addMessageToChat(metaData) {
     // document.querySelector('#chat-log').appendChild(messageElement);
 }
 
+function checkIsCurrentUser(metaData) {
+    return metaData.sender === currentUsername;
+}
+
 function isMessageHistory(data) {
     return data.is_history;
 }
 
-function addMessageToHistory(data) {
+function isMessageIncoming(data) {
+    return data.is_incoming;
+}
+
+function addMessageToHistory(data, isCurrentUser) {
+    const messagesContainer = document.getElementById('chat-log');
+    const messageClass = isCurrentUser ? 'message history outgoing' : 'message history incoming';
+
+    messagesContainer.insertAdjacentHTML('afterbegin',
+        `<div class="${messageClass}">
+            ${!isCurrentUser ? `<strong>${data.sender}</strong><br>` : ''}
+            ${data.message}
+            <span class="timestamp">${new Date(data.timestamp).toLocaleString()}</span>
+        </div>`
+    )
+}
+
+function addIncomingMessage(data) {
     const messagesContainer = document.getElementById('chat-log');
     messagesContainer.insertAdjacentHTML('afterbegin',
-        `<div class="message history">
-            <strong>${data.sender}</strong>: ${data.message}
-            <span class="timestamp">${new Date(data.timestamp).toLocaleString()}</span>
+        `<div class="message incoming">
+            ${data.message}
+            <span class="message-time timestamp">${new Date(data.timestamp).toLocaleString()}</span>
+        </div>`
+    )
+}
+
+function addOutgoingMessage(data) {
+    const messagesContainer = document.getElementById('chat-log');
+    messagesContainer.insertAdjacentHTML('afterbegin',
+        `<div class="message outgoing">
+            ${data.message}
+            <span class="message-time timestamp">${new Date(data.timestamp).toLocaleString()}</span>
         </div>`
     )
 }
 
 function addNewMessage(data) {
     const messagesContainer = document.getElementById('chat-log');
+    const messageClass = isCurrentUser ? 'message new outgoing' : 'message new incoming';
+
     messagesContainer.insertAdjacentHTML('beforeend',
-        `<div class="message new">
-            <strong>${data.sender}</strong>: ${data.message}
+        `<div class="${messageClass}">
+            ${!isCurrentUser ? `<strong>${data.sender}</strong><br>` : ''}
+            ${data.message}
             <span class="timestamp">${new Date(data.timestamp).toLocaleString()}</span>
         </div>`
     )
@@ -108,6 +145,7 @@ function addNewMessage(data) {
 
 function showDebugInformation(metaData) {
     console.log('Message received: ', metaData.message)
+    console.log('DATA: ', metaData);
 }
 
 export function processSendingMessage(chatSocket) {

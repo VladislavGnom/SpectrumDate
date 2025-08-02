@@ -5,6 +5,8 @@ let chatSocket = null;
 export const getChatSocket = () => chatSocket;
 export const setChatSocket = newChatSocket => { chatSocket = newChatSocket };
 
+export const currentUsername = document.getElementById('chat-container').dataset.username;
+
 document.querySelectorAll('.chat-item').forEach(item => {
     item.addEventListener('click', function() {
         const chatId = this.dataset.chatId;
