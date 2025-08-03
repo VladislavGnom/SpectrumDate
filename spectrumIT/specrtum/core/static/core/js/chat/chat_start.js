@@ -17,12 +17,30 @@ document.querySelectorAll('.chat-item').forEach(item => {
     })
 })
 
+function preSendingValidation() {
+    const message = document.querySelector('#chat-message-input');
+
+    if (!message.value) {
+        alert('Сообщение не может быть пустым');
+        return false;
+    }
+    return true;
+}
+
 document.querySelector('#chat-message-input').onkeyup = function(e) {
     if (e.key === 'Enter') {
-        processSendingMessage(chatSocket);
+        const statusValidation = preSendingValidation();
+
+        if (statusValidation) {
+            processSendingMessage(chatSocket);
+        }
     }
 };
 
 document.querySelector('#chat-message-btn').onclick = function(e) {
-    processSendingMessage(chatSocket);
+    const statusValidation = preSendingValidation();
+
+    if (statusValidation) {
+        processSendingMessage(chatSocket);
+    }
 };

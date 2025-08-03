@@ -89,7 +89,6 @@ function getUserOnlineStatus(userResponse) {
 function insertUserCardBeforeActionBlockAndReturnIt(userResponse) {
     const userCardElement = document.createElement('div');
 
-    console.log(userResponse.user)
     userCardElement.innerHTML = `
         <div class="user-card">
             <div class="card-header">

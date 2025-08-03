@@ -17,8 +17,6 @@ function showChatWindow() {
 }
 
 function showChatHeader(chatId) {
-    alert(`${chatId}_id`)
-    console.log(document.getElementById(`${chatId}_id`));
     const participantName = document.getElementById(`${chatId}_id`).dataset.participantName;
     const chatTitleElem = document.getElementById('chat-title')
     chatTitleElem.textContent = participantName;
