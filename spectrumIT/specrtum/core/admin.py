@@ -1,5 +1,5 @@
 from django.contrib import admin
-from core.models.base_models import User
+from core.models.base_models import User, UserStatus
 from core.models.slider_models import UserMessageStorage, Swipe
 from core.models.chat_models import ChatRoom, Message
 
@@ -23,5 +23,10 @@ class SwipeAdmin(admin.ModelAdmin):
 
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
+    # list_display = ('target_user', 'message', 'created_at')
+    ...
+
+@admin.register(UserStatus)
+class UserStatusAdmin(admin.ModelAdmin):
     # list_display = ('target_user', 'message', 'created_at')
     ...

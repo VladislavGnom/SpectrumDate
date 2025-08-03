@@ -61,19 +61,45 @@ function loadMetaHelpDataUsingUserResponse(userResponse) {
     nextPageElement.textContent = nextPage;
 }
 
+function printBeautifulGender(rawGender) {
+    let beautifulGender;
+
+    switch (rawGender) {
+        case 'male':
+            beautifulGender = 'Мужчина';
+            break;
+        case 'female':
+            beautifulGender = 'Женщина';
+            break;
+        default:
+            beautifulGender = 'Не определён';
+    }
+
+    return beautifulGender;
+}
+
+function getUserOnlineStatus(userResponse) {
+    if (userResponse.user.status.is_online) {
+        return "Online";
+    } else {
+        return `Last seen: ${ userResponse.user.status.last_seen }`;
+    }
+}
+
 function insertUserCardBeforeActionBlockAndReturnIt(userResponse) {
     const userCardElement = document.createElement('div');
 
+    console.log(userResponse.user)
     userCardElement.innerHTML = `
         <div class="user-card">
             <div class="card-header">
-                <img src="{% static 'core/images/default.jpg' %}" alt="Фото профиля" class="card-avatar">
+                <img src="${window.location.origin}/media/${userResponse.user.avatar}" alt="Фото профиля" class="card-avatar">
                 <div class="card-verified">✓</div>
             </div>
             
             <div class="card-body">
-                <h1 class="user-name">${userResponse.user.first_name}<span class="user-age">${userResponse.user.age}</span></h1>
-                <p class="user-status">В сети 1 минуту назад</p>
+                <h1 class="user-name">${userResponse.user.first_name}<br><span class="user-age">${userResponse.user.age} лет</span></h1>
+                <p class="user-status">${ getUserOnlineStatus(userResponse) }</p>
                 
                 <div class="user-info">
                     <div class="info-item">
@@ -82,7 +108,7 @@ function insertUserCardBeforeActionBlockAndReturnIt(userResponse) {
                     </div>
                     <div class="info-item">
                         <div class="info-icon">💼</div>
-                        <div class="info-text">${userResponse.user.gender}</div>
+                        <div class="info-text">${printBeautifulGender(userResponse.user.gender)}</div>
                     </div>
                     <div class="info-item">
                         <div class="info-icon">🎓</div>
@@ -91,7 +117,7 @@ function insertUserCardBeforeActionBlockAndReturnIt(userResponse) {
                 </div>
                 
                 <div class="user-bio">
-                    ${userResponse.user.bio}
+                    ${ userResponse.user.bio ? userResponse.user.bio : 'Описание не задано' }
                 </div>
             </div>
         </div>

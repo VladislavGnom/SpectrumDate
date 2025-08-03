@@ -1,8 +1,11 @@
 import json
+
+from django.utils import timezone
+from django.contrib.auth.models import AnonymousUser
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
-from django.contrib.auth.models import AnonymousUser
 from core.models.chat_models import ChatRoom, Message
+from core.models.base_models import User, UserStatus
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
@@ -117,3 +120,36 @@ class ChatConsumer(AsyncWebsocketConsumer):
         from django.utils import timezone
         return timezone.now()
     
+
+class OnlineStatusConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
+        self.user = self.scope["user"]
+        if not self.user.is_authenticated:
+            await self.close()
+            return
+
+        # Группа для рассылки обновлений статуса
+        self.group_name = f"user_{self.user.id}_status"
+        
+        await self.channel_layer.group_add(
+            self.group_name,
+            self.channel_name
+        )
+
+        await self.accept()
+        await self.update_user_status(True)  # Пометить онлайн
+
+    async def disconnect(self, close_code):
+        if hasattr(self, 'user') and self.user.is_authenticated:
+            await self.update_user_status(False)  # Пометить оффлайн
+            await self.channel_layer.group_discard(
+                self.group_name,
+                self.channel_name
+            )
+
+    @database_sync_to_async
+    def update_user_status(self, is_online):
+        UserStatus.objects.update_or_create(
+            user=self.user,
+            defaults={'is_online': is_online, 'last_seen': timezone.now()}
+        )

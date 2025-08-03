@@ -24,6 +24,11 @@
                         {% for participant in chat.participants.all %}
                             {% if participant != request.user %}
                                 <img src="{{ participant.avatar.url }}" alt="user-avatar-{{ participant.pk }}" class="user-avatar" style="height: 48px; width: 48px;">
+                                {% if participant.status.is_online %}
+                                    <small>Online</small>
+                                {% else %}
+                                    <small>Offline</small>
+                                {% endif %}
                             {% endif %}
                         {% endfor %}
                     </div>

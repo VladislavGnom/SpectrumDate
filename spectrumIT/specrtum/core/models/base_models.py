@@ -46,3 +46,13 @@ class User(AbstractUser):
         
     def _validate_age(self, age):
         if age < 18: raise ValidationError()
+
+
+class UserStatus(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='status')
+    is_online = models.BooleanField(default=False)
+    last_seen = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {'Online' if self.is_online else 'Offline'}"
+
