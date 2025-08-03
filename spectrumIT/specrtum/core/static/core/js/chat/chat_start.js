@@ -8,10 +8,11 @@ export const setChatSocket = newChatSocket => { chatSocket = newChatSocket };
 
 export const getCurrentUsername = () => currentUsername;
 
+
 document.querySelectorAll('.chat-item').forEach(item => {
     item.addEventListener('click', function() {
         const chatId = this.dataset.chatId;
-
+        
         startChatByChatId(chatId);
     })
 })

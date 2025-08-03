@@ -1,18 +1,27 @@
 import { getChatSocket, setChatSocket, getCurrentUsername } from './chat_start.js';
 
 export function startChatByChatId(chatId) {
-    prepareChatEnvironment();
+    prepareChatEnvironment(chatId);
     connectToChatByChatId(chatId);
 }
 
-function prepareChatEnvironment() {
+function prepareChatEnvironment(chatId) {
     showChatWindow();
+    showChatHeader(chatId);
 }
 
 function showChatWindow() {
     const mainChatWindow = document.getElementById('main-chat-window');
 
     mainChatWindow.style.display = 'block';
+}
+
+function showChatHeader(chatId) {
+    alert(`${chatId}_id`)
+    console.log(document.getElementById(`${chatId}_id`));
+    const participantName = document.getElementById(`${chatId}_id`).dataset.participantName;
+    const chatTitleElem = document.getElementById('chat-title')
+    chatTitleElem.textContent = participantName;
 }
 
 function connectToChatByChatId(chatId) {

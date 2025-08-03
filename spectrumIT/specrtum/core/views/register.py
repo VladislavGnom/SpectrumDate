@@ -2,28 +2,18 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.models import AnonymousUser
 from core.models.base_models import User
+from core.forms import RegisterForm
 
 def register(request):
-    if request.user is AnonymousUser:
-        return redirect('main')
-    
     if request.method == 'POST':
-        data = request.POST
+        form = RegisterForm(data=request.POST)
 
-        user = User.objects.create_user(
-            username=data.get('username'),
-            first_name=data.get('first_name'),
-            last_name=data.get('last_name'),
-            email=data.get('email'),
-            age=data.get('age'),
-            password=data.get('password'),
-            gender=data.get('gender'),
-            birthdate=data.get('birthdate'),
-            location=data.get('location')
-        ) 
+        if form.is_valid():
+            user = form.save()
 
-        if user:
             login(request, user)    
             return redirect('main')
 
-    return render(request, 'registration/register.html')
+    form = RegisterForm()
+
+    return render(request, 'registration/register.html', {'form': form})

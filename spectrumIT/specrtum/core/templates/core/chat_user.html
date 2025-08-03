@@ -29,9 +29,9 @@
                     </div>
                     <div class="chat-info">
                         <div class="chat-name">
-                            <div id="{{ chat.name }}_id" style="display: none;">{{ chat.name }}</div>
                             {% for participant in chat.participants.all %}
                                 {% if participant != request.user %}
+                                    <div id="{{ chat.pk }}_id" data-participant-name="{{ participant }}" style="display: none;">{{ chat.name }}</div>
                                     <span>{{ participant }}</span>
                                 {% endif %}
                             {% endfor %}
@@ -45,7 +45,7 @@
         </div>
         <div id="main-chat-window" class="main" style="display: none;">
             <div class="conversation-header">
-                <div class="chat-title"></div>
+                <div id="chat-title" class="chat-title"></div>
             </div>
             <div id="chat-log" class="messages">
             </div>

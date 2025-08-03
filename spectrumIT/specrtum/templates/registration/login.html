@@ -24,7 +24,7 @@
         <form method="post" id="loginForm">
           {% csrf_token %}
             <div class="form-group">
-                <span class="form-label">{{ form.username.label_tag}}</span>
+                <span class="form-label">{{ form.username.label_tag }}</span>
                 {{ form.username|attr:"placeholder:Логин"|add_class:"form-input" }}
             </div>
             
