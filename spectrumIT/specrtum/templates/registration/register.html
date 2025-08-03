@@ -24,50 +24,96 @@
         <form id="registrationForm" method="post">
             {% csrf_token %}
 
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
             <div class="form-group">
                 <label class="form-label">{{ form.username.label_tag }}</label>
                 {{ form.username|attr:"placeholder:Придумайте логин"|add_class:"form-input" }}
+                {% if form.username.errors %}
+                    <div class="text-danger">
+                        {% for error in form.username.errors %}
+                            <small>{{ error }}</small><br>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
 
             <div class="form-group">
                 <label class="form-label">{{ form.first_name.label_tag }}</label>
                 {{ form.first_name|attr:"placeholder:Введите своё имя"|add_class:"form-input"}}
+                {% if form.first_name.errors %}
+                    <div class="text-danger">
+                        {% for error in form.first_name.errors %}
+                            <small>{{ error }}</small><br>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
 
             <div class="form-group">
                 <label class="form-label">{{ form.last_name.label_tag }}</label>
                 {{ form.last_name|attr:"placeholder:Введите свою фамилию"|add_class:"form-input" }}
+                {% if form.last_name.errors %}
+                    <div class="text-danger">
+                        {% for error in form.last_name.errors %}
+                            <small>{{ error }}</small><br>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
             
             <div class="form-group">
                 <label class="form-label">{{ form.password1.label_tag }}</label>
-                {{ form.password1|attr:"placeholder:Не менее 6 символов"|add_class:"form-input" }}
+                {{ form.password1|attr:"placeholder:Не менее 8 символов"|add_class:"form-input" }}
+                {% if form.password1.errors %}
+                    <div class="text-danger">
+                        {% for error in form.password1.errors %}
+                            <small>{{ error }}</small><br>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
 
             <div class="form-group">
                 <label class="form-label">{{ form.password2.label_tag }}</label>
                 {{ form.password2|attr:"placeholder:Повторите пароль"|add_class:"form-input" }}
+                {% if form.password2.errors %}
+                    <div class="text-danger">
+                        {% for error in form.password2.errors %}
+                            <small>{{ error }}</small><br>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
             
             <div class="form-group">
                 <label class="form-label">{{ form.gender.label_tag }}</label>
                 {{ form.gender|add_class:"form-input"|attr:"id:gender-options" }}
-                <div class="gender-options">
-                    <label class="gender-option">
-                        <input type="radio" name="gender" value="male" required> Мужской
-                    </label>
-                    <label class="gender-option">
-                        <input type="radio" name="gender" value="female"> Женский
-                    </label>
-                    <label class="gender-option">
-                        <input type="radio" name="gender" value="other"> Другой
-                    </label>
-                </div>
+                {% if form.gender.errors %}
+                    <div class="text-danger">
+                        {% for error in form.gender.errors %}
+                            <small>{{ error }}</small><br>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
             
             <div class="form-group">
                 <label for="birthdate" class="form-label">{{ form.birthdate.label_tag }}</label>
                 {{ form.birthdate|add_class:"form-input" }}
+                {% if form.birthdate.errors %}
+                    <div class="text-danger">
+                        {% for error in form.birthdate.errors %}
+                            <small>{{ error }}</small><br>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
             
             <div class="terms-checkbox">
@@ -85,20 +131,4 @@
         </form>
     </div>
 </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const genderOptionsContainer = document.querySelector('#gender-options');
-
-    Array.from(genderOptionsContainer.options).forEach(option => {
-        const label = document.createElement('label');
-        label.classList.add('gender-option');
-
-        option.insertAdjacentElement('beforebegin', label);
-
-        label.appendChild(option);
-    })
-
-})
-</script>
 {% endblock %}

@@ -13,7 +13,7 @@ def register(request):
 
             login(request, user)    
             return redirect('main')
-
-    form = RegisterForm()
+    else:
+        form = RegisterForm()
 
     return render(request, 'registration/register.html', {'form': form})
