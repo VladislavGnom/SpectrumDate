@@ -2,6 +2,14 @@
 
 <img src="https://github.com/user-attachments/assets/cfb621d9-a2eb-4f2a-8c22-7238da2b887d" alt="Project LOGO" width="300px">
 
+<img width="1024" height="583" alt="Image" src="https://github.com/user-attachments/assets/56379b31-863e-4787-b68e-c92aa51d74ab" />
+
+<img width="1024" height="583" alt="Image" src="https://github.com/user-attachments/assets/6587b171-bd7e-4759-9043-644558a20906" />
+
+<img width="1024" height="637" alt="Image" src="https://github.com/user-attachments/assets/86c84d61-d067-435d-81ff-426190ae6d61" />
+
+<img width="1024" height="634" alt="Image" src="https://github.com/user-attachments/assets/ba8a7ab5-f85c-4db1-b3ec-9ce8c39306bb" />
+
 ## Описание проекта
 
 SpectrumDate - это современная платформа для знакомств, разработанная на Django с использованием WebSockets для реального взаимодействия между пользователями.
